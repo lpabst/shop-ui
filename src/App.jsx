@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import Nav from "./components/Nav/Nav";
 import AppRouter from "./router";
-import { modalContext } from "./context/modalContext";
+import { modalContext } from "./context/store/modalContext";
 import "./app.scss";
 
 function App() {

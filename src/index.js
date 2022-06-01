@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { UserStore } from "./context/userContext";
-import { ModalStore } from "./context/modalContext";
+import { UserStore } from "./context/store/userContext";
+import { ModalStore } from "./context/store/modalContext";
 import App from "./App";
 import "./index.css";
 
