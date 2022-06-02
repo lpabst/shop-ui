@@ -4,13 +4,13 @@ export const userActions = {
   USER_LOGGED_OUT: "USER_LOGGED_OUT",
   SET_SIGN_IN_ERROR: "SET_SIGN_IN_ERROR",
   USER_LOGGED_IN: "USER_LOGGED_IN",
-  SET_CREATE_ACCOUNT_ERROR: "SET_CREATE_ACCOUNT_ERROR",
+  SET_CREATE_ACCOUNT_ERRORS: "SET_CREATE_ACCOUNT_ERRORS",
 };
 
 const initialState = {
   user: null,
   signInError: "",
-  createAccountError: "",
+  createAccountErrors: [],
   cart: [],
 };
 
@@ -37,10 +37,10 @@ const reducer = (state, action) => {
       };
     }
 
-    case userActions.SET_CREATE_ACCOUNT_ERROR: {
+    case userActions.SET_CREATE_ACCOUNT_ERRORS: {
       return {
         ...state,
-        createAccountError: action.value,
+        createAccountErrors: action.value,
       };
     }
 

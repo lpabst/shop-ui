@@ -1,10 +1,12 @@
 import React, { createContext, useReducer } from "react";
 import SignInModal from "../modals/SignInModal/SignInModal";
 import ForgotPasswordModal from "../modals/ForgotPasswordModal/ForgotPasswordModal";
+import VerifyAccountModal from "../modals/VerifyAccountModal/VerifyAccountModal";
 
 export const modalActions = {
   SHOW_SIGN_IN_MODAL: "SHOW_SIGN_IN_MODAL",
   SHOW_FORGOT_PASSWORD_MODAL: "SHOW_FORGOT_PASSWORD_MODAL",
+  SHOW_VERIFY_ACCOUNT_MODAL: "SHOW_VERIFY_ACCOUNT_MODAL",
   CLOSE_MODAL: "CLOSE_MODAL",
 };
 
@@ -30,10 +32,16 @@ const reducer = (state, action) => {
     }
 
     case modalActions.SHOW_FORGOT_PASSWORD_MODAL: {
-      console.log("hit it");
       return {
         ...state,
         modalToDisplay: <ForgotPasswordModal />,
+      };
+    }
+
+    case modalActions.SHOW_VERIFY_ACCOUNT_MODAL: {
+      return {
+        ...state,
+        modalToDisplay: <VerifyAccountModal />,
       };
     }
   }

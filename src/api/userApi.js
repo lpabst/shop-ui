@@ -33,3 +33,12 @@ export async function login({ email, password }) {
 export async function logout() {
   sessionStorage.removeItem("userSession");
 }
+
+export async function createAccount({ email, password, firstName, lastName }) {
+  return axios.post("/user", {
+    email,
+    password,
+    firstName,
+    lastName,
+  });
+}
