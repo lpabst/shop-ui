@@ -8,7 +8,9 @@ function Nav() {
   return (
     <div className={`flexRow nav`}>
       <div className={`flexRow`}>
-        <img className="logo" src={logo} alt="logo" />
+        <Link to="/">
+          <img className="logo" src={logo} alt="logo" />
+        </Link>
         <SearchBar />
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
