@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Nav from "./components/Nav/Nav";
+import Header from "./components/Header/Header";
 import AppRouter from "./router";
 import { modalContext } from "./context/store/modalContext";
 import "./app.scss";
@@ -9,7 +9,7 @@ function App() {
 
   return (
     <div className="app">
-      <Nav />
+      <Header />
       <AppRouter />
       {state.modalToDisplay}
     </div>

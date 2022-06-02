@@ -1,16 +1,23 @@
 .searchBar {
   border-radius: 40px;
-  width: 1200px;
+  width: calc(100% - 400px);
   height: 60px;
   background: #eee;
   border: 3px solid black;
   padding: 0px 100px 0px 24px;
   position: relative;
+  margin: 0 auto;
 
-  .text {
+  .searchInput {
     font-size: 24px;
     width: 100%;
     line-height: 56px;
+    border: none;
+    background: transparent;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .icon {
@@ -18,6 +25,7 @@
     height: 30px;
     position: absolute;
     top: 10px;
+    cursor: pointer;
   }
 
   .searchIcon {
