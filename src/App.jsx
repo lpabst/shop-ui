@@ -1,17 +1,18 @@
 import React, { useContext } from "react";
 import Header from "./components/Header/Header";
 import AppRouter from "./router";
-import { modalContext } from "./context/store/modalContext";
+import { modalContext } from "./context/modalContext";
 import "./app.scss";
+import BaseModal from "./modals/BaseModal/BaseModal";
 
 function App() {
-  const { state, dispatch } = useContext(modalContext);
+  const { state } = useContext(modalContext);
 
   return (
     <div className="app">
       <Header />
       <AppRouter />
-      {state.modalToDisplay}
+      {state.modalToDisplay && <BaseModal>{state.modalToDisplay}</BaseModal>}
     </div>
   );
 }

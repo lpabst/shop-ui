@@ -1,0 +1,19 @@
+.signInModal {
+  width: 100%;
+  position: relative;
+
+  .signInModalHeader {
+    font-size: 28px;
+    margin: 0px 0px 20px 0px;
+  }
+
+  .forgotPasswordLink {
+    text-decoration: underline;
+    cursor: pointer;
+    text-align: right;
+  }
+
+  hr {
+    margin: 30px 0px;
+  }
+}

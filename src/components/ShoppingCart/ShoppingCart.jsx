@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import cartIcon from "../../assets/icons/cart.svg";
-import { userContext } from "../../context/store/userContext";
+import { userContext } from "../../context/userContext";
 import "./shoppingCart.scss";
 
 export default function Cart({}) {
