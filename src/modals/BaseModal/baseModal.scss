@@ -40,6 +40,11 @@
       font-size: 16px;
     }
 
+    .modalErrorText {
+      font-size: 16px;
+      color: #dd1111;
+    }
+
     .modalButton {
       background: #111;
       color: #ddd;
@@ -48,6 +53,7 @@
       width: fit-content;
       font-size: 20px;
       margin: 16px 0px;
+      cursor: pointer;
     }
   }
 }

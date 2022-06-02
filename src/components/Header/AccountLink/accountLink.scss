@@ -1,0 +1,35 @@
+.accountLink {
+  cursor: pointer;
+  position: absolute;
+  top: 32px;
+  right: 80px;
+
+  &:hover {
+    .accountDropDown {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .accountLinkText {
+    font-size: 18px;
+    text-align: right;
+  }
+
+  .accountDropDown {
+    display: none;
+    border: 1px solid black;
+    box-sizing: border-box;
+    z-index: 2000;
+
+    .accountDropDownOption {
+      text-decoration: none;
+      color: black;
+      padding: 16px 16px;
+
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+}

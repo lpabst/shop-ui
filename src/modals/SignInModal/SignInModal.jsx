@@ -1,14 +1,60 @@
 import React, { useState, useContext } from "react";
+import { login } from "../../api/userApi";
 import { modalActions, modalContext } from "../../context/modalContext";
+import { userActions, userContext } from "../../context/userContext";
+import { isValidEmailFormat } from "../../utils/regex";
 import "./signInModal.scss";
 
 export default function SignInModal() {
-  const { state, dispatch } = useContext(modalContext);
+  const { dispatch: modalDispatch } = useContext(modalContext);
+  const { state: userState, dispatch: userDispatch } = useContext(userContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [registerEmail, setRegisterEmail] = useState("");
-  const [registerPassword, setRegisterPassword] = useState("");
+  const [createAccountEmail, setCreateAccountEmail] = useState("");
+  const [createAccountPassword, setCreateAccountPassword] = useState("");
+
+  async function handleLogin() {
+    const emailIsValidFormat = isValidEmailFormat(email);
+    if (!emailIsValidFormat) {
+      return userDispatch({
+        type: userActions.SET_SIGN_IN_ERROR,
+        value: "Invalid email format",
+      });
+    }
+
+    let userData;
+    try {
+      userData = await login({ email, password });
+    } catch (e) {
+      return userDispatch({
+        type: userActions.SET_SIGN_IN_ERROR,
+        value: "Invalid email or password",
+      });
+    }
+
+    userDispatch({
+      type: userActions.SET_SIGN_IN_ERROR,
+      value: "",
+    });
+    modalDispatch(modalActions.CLOSE_MODAL);
+    userDispatch({
+      type: userActions.USER_LOGGED_IN,
+      value: userData,
+    });
+  }
+
+  async function handleCreateAccount() {
+    const emailIsValidFormat = isValidEmailFormat(createAccountEmail);
+    if (!emailIsValidFormat) {
+      return userDispatch({
+        type: userActions.SET_CREATE_ACCOUNT_ERROR,
+        value: "Invalid email format",
+      });
+    }
+
+    // TODO: send create account api call
+  }
 
   return (
     <div className="signInModal">
@@ -31,11 +77,14 @@ export default function SignInModal() {
       />
       <p
         className="forgotPasswordLink"
-        onClick={() => dispatch(modalActions.SHOW_FORGOT_PASSWORD_MODAL)}
+        onClick={() => modalDispatch(modalActions.SHOW_FORGOT_PASSWORD_MODAL)}
       >
         Forgot your password?
       </p>
-      <div className={`modalButton signInButton`} onClick={() => {}}>
+      {userState.signInError && (
+        <p className="modalErrorText">{userState.signInError}</p>
+      )}
+      <div className={`modalButton signInButton`} onClick={handleLogin}>
         Sign in
       </div>
       <hr />
@@ -47,18 +96,24 @@ export default function SignInModal() {
         className={`modalInput emailInput`}
         type="text"
         placeholder="email"
-        value={registerEmail}
-        onChange={(e) => setRegisterEmail(e.target.value)}
+        value={createAccountEmail}
+        onChange={(e) => setCreateAccountEmail(e.target.value)}
       />
       <p className="modalInputLabel">Password</p>
       <input
         className={`modalInput passwordInput`}
         type="password"
         placeholder="password"
-        value={registerPassword}
-        onChange={(e) => setRegisterPassword(e.target.value)}
+        value={createAccountPassword}
+        onChange={(e) => setCreateAccountPassword(e.target.value)}
       />
-      <div className={`modalButton registerButton`} onClick={() => {}}>
+      {userState.createAccountError && (
+        <p className="modalErrorText">{userState.createAccountError}</p>
+      )}
+      <div
+        className={`modalButton registerButton`}
+        onClick={handleCreateAccount}
+      >
         Create an account
       </div>
     </div>
