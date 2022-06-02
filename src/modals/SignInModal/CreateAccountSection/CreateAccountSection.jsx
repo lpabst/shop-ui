@@ -1,13 +1,12 @@
 import React, { useState, useContext } from "react";
-import { createAccount } from "../../../api/userApi";
-import { modalContext } from "../../../context/modalContext";
-import { userActions, userContext } from "../../../context/userContext";
+import { useActions } from "../../../context/actions/actions";
+import { userContext } from "../../../context/reducers/userContext";
 import { isValidEmailFormat } from "../../../utils/regex";
 import "./createAccountSection.scss";
 
 export default function CreateAccountSection() {
-  const { dispatch: modalDispatch } = useContext(modalContext);
   const { state: userState, dispatch: userDispatch } = useContext(userContext);
+  const actions = useActions();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -15,37 +14,19 @@ export default function CreateAccountSection() {
   const [password, setPassword] = useState("");
 
   async function handleCreateAccount() {
-    // TODO: how to make these reusable? how to make these fire when modal first opens up?
-    userDispatch({
-      type: userActions.SET_SIGN_IN_ERROR,
-      value: "",
-    });
-    userDispatch({
-      type: userActions.SET_CREATE_ACCOUNT_ERRORS,
-      value: [],
-    });
+    actions.modal.clearSignInModalErrors();
 
     const validationError = handleCreateAccountValidation();
     if (validationError) {
       return;
     }
 
-    let createAccountResponse;
-    try {
-      createAccountResponse = await createAccount({
-        email: email,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-      });
-    } catch (e) {
-      return userDispatch({
-        type: userActions.SET_CREATE_ACCOUNT_ERRORS,
-        value: ["Unexpected server error"],
-      });
-    }
-
-    modalDispatch("SHOW_VERIFY_ACCOUNT_MODAL");
+    await actions.user.createAccount({
+      email: email,
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+    });
   }
 
   function handleCreateAccountValidation() {
@@ -84,10 +65,7 @@ export default function CreateAccountSection() {
       errors.push("Password must contain a number");
     }
 
-    userDispatch({
-      type: userActions.SET_CREATE_ACCOUNT_ERRORS,
-      value: errors,
-    });
+    actions.user.setCreateAccountErrors(errors);
 
     return !!errors.length;
   }

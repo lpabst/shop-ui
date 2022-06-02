@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
-import { modalContext, modalActions } from "../../context/modalContext";
+import { useActions } from "../../context/actions/actions";
 import "./forgotPasswordModal.scss";
 
 export default function ForgotPasswordModal() {
-  const { state, dispatch } = useContext(modalContext);
+  const actions = useActions();
 
   const [email, setEmail] = useState("");
 
@@ -18,10 +18,7 @@ export default function ForgotPasswordModal() {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <p
-        className="backToSignInLink"
-        onClick={() => dispatch(modalActions.SHOW_SIGN_IN_MODAL)}
-      >
+      <p className="backToSignInLink" onClick={actions.modal.showSignInModal}>
         Back to sign in
       </p>
       <div className={`modalButton forgotPasswordButton`} onClick={() => {}}>

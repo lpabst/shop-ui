@@ -1,50 +1,42 @@
 import React, { useState, useContext } from "react";
 import { login } from "../../../api/userApi";
-import { modalActions, modalContext } from "../../../context/modalContext";
-import { userActions, userContext } from "../../../context/userContext";
+import { useActions } from "../../../context/actions/actions";
+import {
+  modalActions,
+  modalContext,
+} from "../../../context/reducers/modalContext";
+import {
+  userActions,
+  userContext,
+} from "../../../context/reducers/userContext";
 import { isValidEmailFormat } from "../../../utils/regex";
 import "./signInSection.scss";
 
 export default function SignInSection() {
   const { dispatch: modalDispatch } = useContext(modalContext);
   const { state: userState, dispatch: userDispatch } = useContext(userContext);
+  const actions = useActions();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function handleLogin() {
-    userDispatch({
-      type: userActions.SET_SIGN_IN_ERROR,
-      value: "",
-    });
-    userDispatch({
-      type: userActions.SET_CREATE_ACCOUNT_ERRORS,
-      value: [],
-    });
+    actions.modal.clearSignInModalErrors();
 
     const emailIsValidFormat = isValidEmailFormat(email);
     if (!emailIsValidFormat) {
-      return userDispatch({
-        type: userActions.SET_SIGN_IN_ERROR,
-        value: "Invalid email format",
-      });
+      return actions.user.setSignInError("Invalid email format");
     }
 
     let userData;
     try {
       userData = await login({ email, password });
     } catch (e) {
-      return userDispatch({
-        type: userActions.SET_SIGN_IN_ERROR,
-        value: "Invalid email or password",
-      });
+      return actions.user.setSignInError("Invalid email or password");
     }
 
-    modalDispatch(modalActions.CLOSE_MODAL);
-    userDispatch({
-      type: userActions.USER_LOGGED_IN,
-      value: userData,
-    });
+    actions.modal.closeBaseModal();
+    actions.user.setUserSession(userData);
   }
 
   return (
@@ -68,7 +60,7 @@ export default function SignInSection() {
       />
       <p
         className="forgotPasswordLink"
-        onClick={() => modalDispatch(modalActions.SHOW_FORGOT_PASSWORD_MODAL)}
+        onClick={actions.modal.showForgotPasswordModal}
       >
         Forgot your password?
       </p>

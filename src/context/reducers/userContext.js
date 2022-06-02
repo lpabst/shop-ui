@@ -3,7 +3,7 @@ import React, { createContext, useReducer } from "react";
 export const userActions = {
   USER_LOGGED_OUT: "USER_LOGGED_OUT",
   SET_SIGN_IN_ERROR: "SET_SIGN_IN_ERROR",
-  USER_LOGGED_IN: "USER_LOGGED_IN",
+  SET_USER_SESSION: "SET_USER_SESSION",
   SET_CREATE_ACCOUNT_ERRORS: "SET_CREATE_ACCOUNT_ERRORS",
 };
 
@@ -16,7 +16,7 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case userActions.USER_LOGGED_IN: {
+    case userActions.SET_USER_SESSION: {
       return {
         ...state,
         user: action.value,

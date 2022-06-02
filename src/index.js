@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { UserStore } from "./context/userContext";
-import { ModalStore } from "./context/modalContext";
-import { ProductStore } from "./context/productContext";
+import { UserStore } from "./context/reducers/userContext";
+import { ModalStore } from "./context/reducers/modalContext";
+import { ProductStore } from "./context/reducers/productContext";
 import App from "./App";
 import "./index.css";
 

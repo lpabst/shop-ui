@@ -1,17 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import { getHomePageProducts } from "../../api/productsApi";
-import { productActions, productContext } from "../../context/productContext";
+import { useActions } from "../../context/actions/actions";
+import { productContext } from "../../context/reducers/productContext";
 
 function Home() {
-  const { state, dispatch } = useContext(productContext);
+  const { state } = useContext(productContext);
+  const actions = useActions();
 
   useEffect(() => {
     async function getHomePageProductsEffect() {
       const products = await getHomePageProducts();
-      dispatch({
-        type: productActions.SET_HOME_PAGE_PRODUCTS,
-        value: products,
-      });
+      actions.product.setHomePageProducts(products);
     }
     getHomePageProductsEffect();
   }, []);

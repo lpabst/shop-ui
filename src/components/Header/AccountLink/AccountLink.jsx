@@ -1,20 +1,12 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { logout } from "../../../api/userApi";
-import { modalActions, modalContext } from "../../../context/modalContext";
-import { userActions, userContext } from "../../../context/userContext";
+import { useActions } from "../../../context/actions/actions";
+import { userContext } from "../../../context/reducers/userContext";
 import "./accountLink.scss";
 
 export default function AccountLink() {
-  const { dispatch: modalDispatch } = useContext(modalContext);
-  const { state: userState, dispatch: userDispatch } = useContext(userContext);
-
-  async function handleLogout() {
-    await logout();
-    userDispatch({
-      type: userActions.USER_LOGGED_OUT,
-    });
-  }
+  const { state: userState } = useContext(userContext);
+  const actions = useActions();
 
   let accountDropDownStyle = {};
   if (!userState.user) {
@@ -26,10 +18,7 @@ export default function AccountLink() {
       {userState.user ? (
         <p className="accountLinkText">{userState.user.firstName}</p>
       ) : (
-        <p
-          className="accountLinkText"
-          onClick={() => modalDispatch(modalActions.SHOW_SIGN_IN_MODAL)}
-        >
+        <p className="accountLinkText" onClick={actions.modal.showSignInModal}>
           Sign In
         </p>
       )}
@@ -37,7 +26,7 @@ export default function AccountLink() {
         <Link to="/account" className="accountDropDownOption">
           My Account
         </Link>
-        <p className="accountDropDownOption" onClick={handleLogout}>
+        <p className="accountDropDownOption" onClick={actions.user.logoutUser}>
           Logout
         </p>
       </div>
